@@ -710,3 +710,36 @@ runcode(function()
 
 local plr1 = game.Players.LocalPlayer
 		createwarning("TechBed Client", "Welcome back "..(plr1.Name or plr1.DisplayName), 10)
+
+
+runcode(function()
+    local ACDisabler = {Enabled = false}
+    ACDisabler = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
+        Name = "ACDisabler",
+        Function = function(callback)
+            if callback then
+                task.spawn(function()
+                    repeat
+                        task.wait()
+                        local args = {
+                            [1] = {
+                                ["partPositions"] = {
+                                    [1] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [2] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [3] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [4] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [5] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [6] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame),
+                                    [7] = Vector3.new(game.entityLibary.character.HumanoidRootPart.CFrame)
+                                },
+                                ["partSize"] = Vector3.new(999999, 0.5, 9999.99999999999999999999)
+                            }
+                        }
+                        
+                        game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SpiritBridgeEnter"):InvokeServer(unpack(args))
+                    until not ACDisabler.Enabled
+                end)
+            end
+        end
+    })
+end)
